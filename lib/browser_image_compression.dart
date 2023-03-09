@@ -9,8 +9,8 @@ import 'package:js/js.dart';
 
 @JS()
 @anonymous
-class Options {
-  external factory Options({
+class OptionsJS {
+  external factory OptionsJS({
     /** @default Number.POSITIVE_INFINITY */
     double? maxSizeMB,
     /** @default undefined */
@@ -38,8 +38,51 @@ class Options {
   });
 }
 
+class Options {
+  late OptionsJS impl;
+
+  Options({
+    /** @default Number.POSITIVE_INFINITY */
+    double maxSizeMB = 1,
+    /** @default undefined */
+    double maxWidthOrHeight = 2048,
+    /** @default true */
+    bool useWebWorker = true,
+    /** @default 10 */
+    double maxIteration = 10,
+    /** Default to be the exif orientation from the image file */
+    double? exifOrientation,
+    /** A function takes one progress argument (progress from 0 to 100) */
+    Function(double progress)? onProgress,
+    /** Default to be the original mime type from the image file */
+    String? fileType,
+    /** @default 1.0 */
+    double initialQuality = 1,
+    /** @default false */
+    bool alwaysKeepResolution = false,
+    /** @default undefined */
+    // AbortSignal? signal,
+    /** @default false */
+    bool preserveExif = false,
+    /** @default https://cdn.jsdelivr.net/npm/browser-image-compression/dist/browser-image-compression.js */
+    String? libURL,
+  }) : impl = OptionsJS(
+          maxSizeMB: maxSizeMB,
+          maxWidthOrHeight: maxWidthOrHeight,
+          useWebWorker: useWebWorker,
+          maxIteration: maxIteration,
+          exifOrientation: exifOrientation,
+          onProgress: (onProgress != null) ? allowInterop(onProgress) : null,
+          fileType: fileType,
+          initialQuality: initialQuality,
+          alwaysKeepResolution: alwaysKeepResolution,
+          preserveExif: preserveExif,
+          libURL: libURL,
+        );
+}
+
 @JS("imageCompression")
-external Promise imageCompression(File file, Options opts);
+external Promise imageCompression(File file, OptionsJS optionsJS);
 
 class BrowserImageCompression {
   static Future<Uint8List> compressImage(XFile xfile, Options opts) async {
@@ -51,7 +94,8 @@ class BrowserImageCompression {
       {'type': xfile.mimeType},
     );
 
-    var value = await completerForPromise(imageCompression(file, opts)).future;
+    var value =
+        await completerForPromise(imageCompression(file, opts.impl)).future;
 
     var r = FileReader();
 

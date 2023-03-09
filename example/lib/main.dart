@@ -1,9 +1,11 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter/services.dart';
 import 'package:browser_image_compression/browser_image_compression.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,6 +20,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final _imageNotifier = ValueNotifier<Uint8List?>(null);
+  final _progressIndicatorNotifier = ValueNotifier<double?>(null);
   String comparisonSize = "";
 
   onButtonPressed() async {
@@ -28,11 +31,18 @@ class _MyAppState extends State<MyApp> {
       final initialSize = await xfile.length();
 
       _imageNotifier.value = await BrowserImageCompression.compressImage(
-          xfile,
-          Options(
-            maxSizeMB: 1,
-            useWebWorker: true,
-          ));
+        xfile,
+        Options(
+          maxSizeMB: 1,
+          maxWidthOrHeight: 2048,
+          useWebWorker: true,
+          onProgress: (progress) {
+            _progressIndicatorNotifier.value = progress;
+          },
+        ),
+      );
+
+      _progressIndicatorNotifier.value = null;
 
       if (_imageNotifier.value != null) {
         final finalSize = (_imageNotifier.value!).length;
@@ -52,30 +62,59 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: const Text('Plugin example app'),
         ),
-        body: Center(
-          child: Column(
-            children: [
-              ElevatedButton(
-                onPressed: onButtonPressed,
-                child: const Text('pick image'),
-              ),
-              ValueListenableBuilder<Uint8List?>(
-                  valueListenable: _imageNotifier,
-                  builder: (context, value, child) {
-                    if (value != null) {
-                      return SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            Text(comparisonSize),
-                            Image.memory(value),
-                          ],
-                        ),
-                      );
-                    } else {
-                      return Container();
-                    }
-                  }),
-            ],
+        body: SingleChildScrollView(
+          child: Center(
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 20,
+                ),
+                ElevatedButton(
+                  onPressed: onButtonPressed,
+                  child: const Text('pick image'),
+                ),
+                Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: ValueListenableBuilder<double?>(
+                          valueListenable: _progressIndicatorNotifier,
+                          builder: (context, value, child) {
+                            if (kDebugMode) {
+                              print(_progressIndicatorNotifier.value);
+                            }
+                            if (value != null) {
+                              return CircularPercentIndicator(
+                                radius: 100.0,
+                                lineWidth: 10.0,
+                                percent: value / 100,
+                                center: Text("$value%"),
+                                backgroundColor: Colors.grey,
+                                progressColor: Colors.blue,
+                              );
+                            } else {
+                              return Container();
+                            }
+                          }),
+                    ),
+                    ValueListenableBuilder<Uint8List?>(
+                        valueListenable: _imageNotifier,
+                        builder: (context, value, child) {
+                          if (value != null) {
+                            return Column(
+                              children: [
+                                Text(comparisonSize),
+                                Image.memory(value),
+                              ],
+                            );
+                          } else {
+                            return Container();
+                          }
+                        }),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
