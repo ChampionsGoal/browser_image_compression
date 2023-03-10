@@ -8,7 +8,8 @@ abstract class BrowserImageCompressionPlatform extends PlatformInterface {
 
   static final Object _token = Object();
 
-  static BrowserImageCompressionPlatform _instance = MethodChannelBrowserImageCompression();
+  static BrowserImageCompressionPlatform _instance =
+      MethodChannelBrowserImageCompression();
 
   /// The default instance of [BrowserImageCompressionPlatform] to use.
   ///

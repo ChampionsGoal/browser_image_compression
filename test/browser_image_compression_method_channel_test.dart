@@ -3,7 +3,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:browser_image_compression/browser_image_compression_method_channel.dart';
 
 void main() {
-  MethodChannelBrowserImageCompression platform = MethodChannelBrowserImageCompression();
+  MethodChannelBrowserImageCompression platform =
+      MethodChannelBrowserImageCompression();
   const MethodChannel channel = MethodChannel('browser_image_compression');
 
   TestWidgetsFlutterBinding.ensureInitialized();

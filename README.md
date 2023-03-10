@@ -1,6 +1,6 @@
 # Browser Image Compression
 
-This is a flutter plugin package that compress images using the javascript library [browser_image_compression](https://github.com/Donaldcwl/browser-image-compression). This plugin only works on Web platform. Please see `browser-image-compression` repository for all image compression benefits.
+This is a [flutter plugin package](https://pub.dev/packages/browser_image_compression) that compress images using the javascript library [browser_image_compression](https://github.com/Donaldcwl/browser-image-compression). This plugin only works on Web platform. Please see `browser-image-compression` repository for all image compression benefits.
 
 Main benifits of this plugin compared with other packages currently available on pub.dev are:
 - Compression works on a web worker cuncurrently with your flutter app.
@@ -58,4 +58,5 @@ if (xfile != null) {
 
 ## TODO
 - Implement javascript "AbortSignal" to abort compression.
+
 
