@@ -1,5 +1,5 @@
 name: browser_image_compression
-description: This plugin wraps a JavaScript library used for image compression and is specifically designed for use in Flutter Web. The image compression process runs on a web worker concurrently with Flutter's UI main thread, ensuring smooth performance. You can set the final size of the compressed image to any desired value. However, please note that when a high compression rate is set, the library may take longer to process the image.
+description: This plugin wraps a JavaScript library used for image compression and is specifically designed for use in Flutter Web. 
 version: 1.0.1
 homepage: https://github.com/ChampionsGoal/browser_image_compression
 
