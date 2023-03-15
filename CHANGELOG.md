@@ -4,3 +4,7 @@
 
 ## 1.0.2
 * This release complies with plugin description length
+
+
+## 1.0.3
+* Added a general method for compress images sourced other than XFile

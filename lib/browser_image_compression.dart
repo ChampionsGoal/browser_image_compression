@@ -83,13 +83,38 @@ class Options {
 external Promise imageCompression(File file, OptionsJS optionsJS);
 
 class BrowserImageCompression {
-  static Future<Uint8List> compressImage(XFile xfile, Options opts) async {
+  static Future<Uint8List> compressImageByXFile(
+      XFile xfile, Options opts) async {
     var completer = Completer<Uint8List>();
 
     var file = File(
       [await xfile.readAsBytes()],
       xfile.name,
       {'type': xfile.mimeType},
+    );
+
+    var value =
+        await completerForPromise(imageCompression(file, opts.impl)).future;
+
+    var r = FileReader();
+
+    r.readAsArrayBuffer(value);
+
+    r.onLoadEnd.listen((data) {
+      completer.complete(r.result as Uint8List);
+    });
+
+    return completer.future;
+  }
+
+  static Future<Uint8List> compressImage(
+      String filename, Uint8List data, String mineType, Options opts) async {
+    var completer = Completer<Uint8List>();
+
+    var file = File(
+      [data],
+      filename,
+      {'type': mineType},
     );
 
     var value =

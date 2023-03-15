@@ -31,8 +31,12 @@ final XFile? xfile =
 if (xfile != null) {
     final initialSize = await xfile.length();
 
+    // there's is compressImageByXFile that you can input the XFile directly but in this example it
+    // uses the general method in case you're getting your image file through another way
     _imageNotifier.value = await BrowserImageCompression.compressImage(
-    xfile,
+    basename(xfile.path), // or xfile.name
+    await xfile.readAsBytes(),
+    lookupMimeType(xfile.name).toString(),
     Options(
         maxSizeMB: 1,
         maxWidthOrHeight: 2048,
