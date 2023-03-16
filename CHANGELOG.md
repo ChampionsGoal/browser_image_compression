@@ -8,3 +8,6 @@
 
 ## 1.0.3
 * Added a general method for compress images sourced other than XFile
+
+## 1.0.4
+* Removed extra "script" tag on readme

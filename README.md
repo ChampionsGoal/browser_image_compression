@@ -14,7 +14,6 @@ Main benifits of this plugin compared with other packages currently available on
 - append inside the `<head>` tag on `index.html`
 ```html
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/browser-image-compression@2.0.2/dist/browser-image-compression.js"></script>
-<script>
 ```
 - import the plugin
 ``` dart
