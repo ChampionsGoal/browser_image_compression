@@ -1,8 +1,9 @@
 # Browser Image Compression
+[![Version](https://img.shields.io/pub/v/browser_image_compression)](https://pub.dev/packages/browser_image_compression)
 
 This is a [flutter plugin package](https://pub.dev/packages/browser_image_compression) that compress images using the javascript library [browser_image_compression](https://github.com/Donaldcwl/browser-image-compression). This plugin only works on Web platform. Please see `browser-image-compression` repository for all image compression benefits.
 
-Main benifits of this plugin compared with other packages currently available on pub.dev are:
+Notable benifits of this plugin are:
 - Compression works on a web worker cuncurrently with your flutter app.
 - Image compression update progress.
 - Also can resize image if prefered.
