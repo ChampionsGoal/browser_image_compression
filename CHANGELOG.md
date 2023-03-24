@@ -11,3 +11,6 @@
 
 ## 1.0.4
 * Removed extra "script" tag on readme
+
+## 1.0.5
+* Update readme
