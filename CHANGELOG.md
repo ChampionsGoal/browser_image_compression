@@ -14,3 +14,6 @@
 
 ## 1.0.5
 * Update readme
+
+## 1.0.6
+* Added universal_html to avoid conflicts with platforms other than web. 
