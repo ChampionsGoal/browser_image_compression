@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:html';
+import 'package:universal_html/html.dart';
 import 'dart:typed_data';
 
 import 'package:cross_file/cross_file.dart';
