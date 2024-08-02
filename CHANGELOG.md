@@ -17,3 +17,6 @@
 
 ## 1.0.6
 * Added universal_html to avoid conflicts with platforms other than web. 
+
+## 1.1.0
+* now BrowserImageCompression compiles in platforms other than web.
