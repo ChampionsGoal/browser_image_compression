@@ -1,3 +1,5 @@
+import 'package:browser_image_compression/browser_image_compression.dart';
+import 'package:cross_file/cross_file.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
@@ -16,4 +18,15 @@ class MethodChannelBrowserImageCompression
         await methodChannel.invokeMethod<String>('getPlatformVersion');
     return version;
   }
+}
+
+Future<Uint8List> compressImageByXFileBase(XFile xfile, Options opts) {
+  throw UnimplementedError(
+      "compressImageByXFile doesn't work on platforms other than web");
+}
+
+Future<Uint8List> compressImageBase(
+    String filename, Uint8List data, String mineType, Options opts) {
+  throw UnimplementedError(
+      "compressImage doesn't work on platforms other than web");
 }
