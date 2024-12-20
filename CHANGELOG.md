@@ -20,3 +20,7 @@
 
 ## 1.1.0
 * now BrowserImageCompression compiles in platforms other than web.
+
+## 1.1.1
+* Removed platform-specific conditional compilation for library.
+* Methods compressImageByXFileBase and compressImageBase are not globally declared anymore and are properly implemented on the classes that implements BrowserImageCompressionPlatform.
