@@ -24,3 +24,6 @@
 ## 1.1.1
 * Removed platform-specific conditional compilation for library.
 * Methods compressImageByXFileBase and compressImageBase are not globally declared anymore and are properly implemented on the classes that implements BrowserImageCompressionPlatform.
+
+## 1.1.2
+* Fix readme typo.
