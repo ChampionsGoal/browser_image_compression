@@ -29,6 +29,61 @@ class BrowserImageCompressionWeb extends BrowserImageCompressionPlatform {
     final version = html.window.navigator.userAgent;
     return version;
   }
+
+  @override
+  Future<Uint8List> compressImageByXFile(XFile xfile, Options opts) async {
+    var completer = Completer<Uint8List>();
+
+    var file = File(
+      [await xfile.readAsBytes()],
+      xfile.name,
+      {'type': xfile.mimeType},
+    );
+
+    OptionsBase optionsBase = OptionsBase.fromOptions(opts);
+
+    var value =
+        await completerForPromise(imageCompression(file, optionsBase.impl))
+            .future;
+
+    var r = FileReader();
+
+    r.readAsArrayBuffer(value);
+
+    r.onLoadEnd.listen((data) {
+      completer.complete(r.result as Uint8List);
+    });
+
+    return completer.future;
+  }
+
+  @override
+  Future<Uint8List> compressImage(
+      String filename, Uint8List data, String mineType, Options opts) async {
+    var completer = Completer<Uint8List>();
+
+    var file = File(
+      [data],
+      filename,
+      {'type': mineType},
+    );
+
+    OptionsBase optionsBase = OptionsBase.fromOptions(opts);
+
+    var value =
+        await completerForPromise(imageCompression(file, optionsBase.impl))
+            .future;
+
+    var r = FileReader();
+
+    r.readAsArrayBuffer(value);
+
+    r.onLoadEnd.listen((data) {
+      completer.complete(r.result as Uint8List);
+    });
+
+    return completer.future;
+  }
 }
 
 @JS()
@@ -124,59 +179,6 @@ class OptionsBase {
 
 @JS("imageCompression")
 external Promise imageCompression(File file, OptionsJS optionsJS);
-
-Future<Uint8List> compressImageByXFileBase(XFile xfile, Options opts) async {
-  var completer = Completer<Uint8List>();
-
-  var file = File(
-    [await xfile.readAsBytes()],
-    xfile.name,
-    {'type': xfile.mimeType},
-  );
-
-  OptionsBase optionsBase = OptionsBase.fromOptions(opts);
-
-  var value =
-      await completerForPromise(imageCompression(file, optionsBase.impl))
-          .future;
-
-  var r = FileReader();
-
-  r.readAsArrayBuffer(value);
-
-  r.onLoadEnd.listen((data) {
-    completer.complete(r.result as Uint8List);
-  });
-
-  return completer.future;
-}
-
-Future<Uint8List> compressImageBase(
-    String filename, Uint8List data, String mineType, Options opts) async {
-  var completer = Completer<Uint8List>();
-
-  var file = File(
-    [data],
-    filename,
-    {'type': mineType},
-  );
-
-  OptionsBase optionsBase = OptionsBase.fromOptions(opts);
-
-  var value =
-      await completerForPromise(imageCompression(file, optionsBase.impl))
-          .future;
-
-  var r = FileReader();
-
-  r.readAsArrayBuffer(value);
-
-  r.onLoadEnd.listen((data) {
-    completer.complete(r.result as Uint8List);
-  });
-
-  return completer.future;
-}
 
 @JS("Promise")
 class Promise {
