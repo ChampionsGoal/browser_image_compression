@@ -1,3 +1,7 @@
+import 'dart:typed_data';
+
+import 'package:browser_image_compression/browser_image_compression.dart';
+import 'package:cross_file/src/types/interface.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:browser_image_compression/browser_image_compression_platform_interface.dart';
 import 'package:browser_image_compression/browser_image_compression_method_channel.dart';
@@ -8,6 +12,19 @@ class MockBrowserImageCompressionPlatform
     implements BrowserImageCompressionPlatform {
   @override
   Future<String?> getPlatformVersion() => Future.value('42');
+
+  @override
+  Future<Uint8List> compressImage(
+      String filename, Uint8List data, String mineType, Options opts) {
+    // TODO: implement compressImage
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Uint8List> compressImageByXFile(XFile xfile, Options opts) {
+    // TODO: implement compressImageByXFile
+    throw UnimplementedError();
+  }
 }
 
 void main() {

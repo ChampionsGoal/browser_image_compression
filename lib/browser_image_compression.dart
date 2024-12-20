@@ -1,6 +1,5 @@
 import 'dart:async';
-import 'package:browser_image_compression/browser_image_compression_method_channel.dart'
-    if (dart.library.html) 'package:browser_image_compression/browser_image_compression_web.dart';
+import 'package:browser_image_compression/browser_image_compression_platform_interface.dart';
 import 'package:flutter/foundation.dart';
 
 import 'package:cross_file/cross_file.dart';
@@ -58,13 +57,20 @@ class Options {
 }
 
 class BrowserImageCompression {
+  static BrowserImageCompressionPlatform get platform =>
+      BrowserImageCompressionPlatform.instance;
+
+  static set platform(BrowserImageCompressionPlatform platform) {
+    BrowserImageCompressionPlatform.instance = platform;
+  }
+
   static Future<Uint8List> compressImageByXFile(
       XFile xfile, Options opts) async {
-    return compressImageByXFileBase(xfile, opts);
+    return platform.compressImageByXFile(xfile, opts);
   }
 
   static Future<Uint8List> compressImage(
       String filename, Uint8List data, String mineType, Options opts) async {
-    return compressImageBase(filename, data, mineType, opts);
+    return platform.compressImage(filename, data, mineType, opts);
   }
 }
